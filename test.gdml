@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gdml xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+    <!--
+      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      ++++   Linear collider detector description GDML in C++  ++++
+      ++++   DD4hep Detector description generator.            ++++
+      ++++                                                     ++++
+      ++++   Parser: TinyXML DOM mini-parser                   ++++
+      ++++                                                     ++++
+      ++++                              M.Frank CERN/LHCb      ++++
+      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  -->
+    <define>
+        <position name="identity_pos" x="0" y="0" z="0" unit="cm" />
+    </define>
+    <materials>
+        <element name="N" formula="N" Z="7">
+            <atom type="A" unit="g/mol" value="1.40067400e+01" />
+        </element>
+        <element name="O" formula="O" Z="8">
+            <atom type="A" unit="g/mol" value="1.59994000e+01" />
+        </element>
+        <element name="AR" formula="AR" Z="18">
+            <atom type="A" unit="g/mol" value="3.99480000e+01" />
+        </element>
+        <material name="Air">
+            <D value="1.20000000e-03" unit="g/cm3" type="density" />
+            <fraction n="7.54000000e-01" ref="N" />
+            <fraction n="2.34000000e-01" ref="O" />
+            <fraction n="1.20000000e-02" ref="AR" />
+        </material>
+    </materials>
+    <solids>
+        <cone name="BeamTube_SimpleCylinder_shape_0x20a20d0" z="1.02100000e+02" rmin1="0.00000000e+00" rmin2="0.00000000e+00" rmax1="4.00000000e+00" rmax2="4.00000000e+00" startphi="0.00000000e+00" deltaphi="3.60000000e+02" aunit="deg" lunit="cm" />
+        <cone name="ParametricSimTracker_shape_0x20ab190" z="3.00000000e+02" rmin1="4.00000000e+00" rmin2="4.00000000e+00" rmax1="5.00000000e+01" rmax2="5.00000000e+01" startphi="0.00000000e+00" deltaphi="3.60000000e+02" aunit="deg" lunit="cm" />
+        <box name="world_volume_shape_0x210c720" x="2.00000000e+03" y="2.00000000e+03" z="2.00000000e+03" lunit="cm" />
+    </solids>
+    <structure>
+        <volume name="BeamTube_SimpleCylinder_0x20a2c10">
+            <materialref ref="Air" />
+            <solidref ref="BeamTube_SimpleCylinder_shape_0x20a20d0" />
+        </volume>
+        <volume name="ParametricSimTracker_0x20ab310">
+            <materialref ref="Air" />
+            <solidref ref="ParametricSimTracker_shape_0x20ab190" />
+        </volume>
+        <volume name="world_volume_0x2100ff0">
+            <materialref ref="Air" />
+            <solidref ref="world_volume_shape_0x210c720" />
+            <physvol>
+                <volumeref ref="BeamTube_SimpleCylinder_0x20a2c10" />
+                <positionref ref="identity_pos" />
+            </physvol>
+            <physvol>
+                <volumeref ref="ParametricSimTracker_0x20ab310" />
+                <positionref ref="identity_pos" />
+            </physvol>
+        </volume>
+    </structure>
+    <setup name="default" version="1.0">
+        <world ref="world_volume_0x2100ff0" />
+    </setup>
+</gdml>
